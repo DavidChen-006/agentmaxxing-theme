@@ -30,24 +30,39 @@ updates** pulls whatever has been pushed here.
 
 ## Local development
 
-The CLI syncs a local folder to the live site on every save — no commit, no
-push, no clicking.
+GitHub is the source of truth. The live theme on agentmaxing.org is
+git-linked (theme id 1), so the only path from a local edit to the live site
+is: commit, push, tell Discourse to pull.
 
 ```bash
-gem install discourse_theme
-discourse_theme watch .
+./deploy.sh "what you changed"
 ```
 
-First run asks for the site URL (`https://agentmaxing.org`) and an API key
-from `/admin/api/keys`. It stores them in `~/.discourse_theme`.
+That commits, pushes to `main`, triggers `remote_update` on the live theme,
+and prints whether the live version matches the remote. Takes a few seconds.
 
-Changes appear in the browser about a second after saving. Nothing is
-committed automatically — git is still yours to drive.
+The API key is read from `~/.discourse_theme` and never printed or committed.
+Create one at `/admin/api/keys` (Single User, Global scope); the file is
+written the first time you run `discourse_theme watch .`.
+
+### Why not `discourse_theme watch`?
+
+The CLI's watch mode pushes local files straight to the site over the API,
+bypassing git entirely. That is faster — sub-second — but the live site then
+drifts from GitHub, and the next `remote_update` silently overwrites it with
+whatever is on `main`. Since this theme is git-linked, `deploy.sh` is the
+path that keeps the two in agreement.
+
+If you want the fast loop for a heavy CSS session, point `watch` at a
+*separate* unattached theme, then move the result here and deploy. Do not
+point it at theme 1.
+
 
 ## Notes
 
-- `common.scss` ships an install-check rule that puts a colored bar under the
-  site header. Delete it once you've confirmed the component is live.
+- The live component is theme id 1, attached to the **Foundation** theme.
+  Installing a component only makes it available; it renders only once added
+  under Components on the active theme.
 - Extend core UI through **plugin outlets**, not by overriding core
   components. Outlets are a supported API and survive upgrades. Find them by
   searching the Discourse source for `<PluginOutlet @name=`.
