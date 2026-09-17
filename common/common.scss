@@ -1,0 +1,44 @@
+// Agentmaxxing theme component
+// Loaded on every page, desktop and mobile.
+//
+// Discourse exposes its color scheme as CSS custom properties, so you can
+// restyle without forking core SCSS. The main ones:
+//
+//   --primary     body text
+//   --secondary   page background
+//   --tertiary    links and primary buttons
+//   --quaternary  highlights
+//   --highlight   search / mention highlight
+//   --danger      destructive actions
+//   --success     confirmations
+//
+// Each also comes in tinted steps: --primary-low, --primary-medium,
+// --primary-high, and so on, blended against the background.
+
+// ---------------------------------------------------------------------------
+// INSTALL CHECK — delete this block once you've confirmed the theme is live.
+// Adds a colored bar under the site header.
+// ---------------------------------------------------------------------------
+.d-header {
+  border-bottom: 3px solid var(--tertiary);
+}
+
+// ---------------------------------------------------------------------------
+// Your customizations below.
+// ---------------------------------------------------------------------------
+
+// Wider reading column:
+// #main-outlet {
+//   max-width: 1200px;
+// }
+
+// Denser topic list:
+// .topic-list-item td {
+//   padding-top: 0.6em;
+//   padding-bottom: 0.6em;
+// }
+
+// Override the color scheme:
+// :root {
+//   --tertiary: #4a7dff;
+// }
